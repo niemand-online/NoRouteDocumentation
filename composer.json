@@ -1,0 +1,12 @@
+{
+  "name": "niemand-online/NoRouteDocumentation",
+  "description": "A shopware next plugin to get a readable documentation for all the routes.",
+  "license": "LGPL-3.0",
+  "type": "shopware-plugin",
+  "extra": {
+    "installer-name": "NoRouteDocumentation"
+  },
+  "require": {
+    "php": ">=7.1.0"
+  }
+}
