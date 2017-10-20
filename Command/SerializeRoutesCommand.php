@@ -6,7 +6,9 @@ use NoRouteDocumentation\Factory\RouteCollectionSerializerFactory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -30,7 +32,8 @@ class SerializeRoutesCommand extends ContainerAwareCommand
     protected function configure(): void
     {
         $this->setDescription('Serialize all the routes')
-            ->addArgument('format', InputArgument::REQUIRED, 'The target format (json)');
+            ->addArgument('format', InputArgument::REQUIRED, 'The target format (json)')
+            ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'The output filename (if omitted it prints into the commandline)');
     }
 
     /**
@@ -40,9 +43,15 @@ class SerializeRoutesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        $serializerOutput = $output;
+
+        if (!empty($input->getOption('output'))) {
+            $serializerOutput = new StreamOutput(fopen($input->getOption('output'), 'w'));
+        }
+
         $this->getSerializerFactory()
             ->createByTargetType($input->getArgument('format'))
-            ->serializeRouteCollection($this->getRouter()->getRouteCollection(), $output);
+            ->serializeRouteCollection($this->getRouter()->getRouteCollection(), $serializerOutput);
     }
 
     /**
