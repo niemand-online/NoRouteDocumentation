@@ -4,6 +4,7 @@ namespace NoRouteDocumentation\Factory;
 
 use NoRouteDocumentation\Exception\RouteCollectionSerializerNotFound;
 use NoRouteDocumentation\Serializer\RouteCollectionSerializerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class RouteCollectionSerializerFactory
@@ -12,12 +13,39 @@ use NoRouteDocumentation\Serializer\RouteCollectionSerializerInterface;
 class RouteCollectionSerializerFactory
 {
     /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * RouteCollectionSerializerFactory constructor.
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
      * @param string $targetType
      * @return RouteCollectionSerializerInterface
      * @throws RouteCollectionSerializerNotFound
      */
     public function createByTargetType(string $targetType): RouteCollectionSerializerInterface
     {
-        throw new RouteCollectionSerializerNotFound($targetType);
+        /** @var RouteCollectionSerializerInterface $result */
+        $result = null;
+
+        switch (strtolower($targetType)) {
+            case 'json':
+                $result = $this->container->get('no_route_documentation.route_collection_serializer.as_json_serializer');
+                break;
+        }
+
+        if (!$result) {
+            throw new RouteCollectionSerializerNotFound($targetType);
+        }
+
+        return $result;
     }
 }

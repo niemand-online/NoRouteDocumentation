@@ -3,8 +3,14 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <!-- Serializer -->
+        <service id="no_route_documentation.route_collection_serializer.as_json_serializer"
+                 class="NoRouteDocumentation\Serializer\RouteCollectionAsJsonSerializer"/>
+
         <!-- Factory -->
         <service id="no_route_documentation.factory.route_collection_serializer"
-                 class="NoRouteDocumentation\Factory\RouteCollectionSerializerFactory"/>
+                 class="NoRouteDocumentation\Factory\RouteCollectionSerializerFactory">
+            <argument type="service" id="service_container"/>
+        </service>
     </services>
 </container>
