@@ -3,6 +3,9 @@
 namespace NoRouteDocumentation\Command;
 
 use NoRouteDocumentation\Factory\RouteCollectionSerializerFactory;
+use Shopware\Context\Struct\TranslationContext;
+use Shopware\Shop\Repository\ShopRepository;
+use Shopware\Shop\Struct\ShopBasicStruct;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +36,7 @@ class SerializeRoutesCommand extends ContainerAwareCommand
     {
         $this->setDescription('Serialize all the routes')
             ->addArgument('format', InputArgument::REQUIRED, 'The target format (json)')
+            ->addArgument('shop', InputArgument::REQUIRED, 'The primary key of the shop')
             ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'The output filename (if omitted it prints into the commandline)');
     }
 
@@ -49,9 +53,14 @@ class SerializeRoutesCommand extends ContainerAwareCommand
             $serializerOutput = new StreamOutput(fopen($input->getOption('output'), 'w'));
         }
 
+        /// TODO improve shop handling
+        $shopKey = $input->getArgument('shop');
+        /** @var ShopBasicStruct $shop */
+        $shop = $this->getShopRepository()->read([$shopKey], new TranslationContext($shopKey, true, $shopKey))->getIterator()->current();
+
         $this->getSerializerFactory()
             ->createByTargetType($input->getArgument('format'))
-            ->serializeRouteCollection($this->getRouter()->getRouteCollection(), $serializerOutput);
+            ->serializeRouteCollection($shop, $this->getRouter()->getRouteCollection(), $serializerOutput);
     }
 
     /**
@@ -78,5 +87,18 @@ class SerializeRoutesCommand extends ContainerAwareCommand
     protected function getRouter(): RouterInterface
     {
         return $this->router = ($this->router ?? $this->getContainer()->get('router'));
+    }
+
+    /**
+     * @var ShopRepository
+     */
+    private $shopRepository;
+
+    /**
+     * @return ShopRepository
+     */
+    public function getShopRepository(): ShopRepository
+    {
+        return $this->shopRepository = ($this->shopRepository ?? $this->getContainer()->get('shopware.shop.repository'));
     }
 }

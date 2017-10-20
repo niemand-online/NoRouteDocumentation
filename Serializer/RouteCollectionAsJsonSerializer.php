@@ -2,6 +2,7 @@
 
 namespace NoRouteDocumentation\Serializer;
 
+use Shopware\Shop\Struct\ShopBasicStruct;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -13,15 +14,19 @@ use Symfony\Component\Routing\RouteCollection;
 class RouteCollectionAsJsonSerializer implements RouteCollectionSerializerInterface
 {
     /**
+     * @param ShopBasicStruct $basicShop
      * @param RouteCollection $routes
      * @param OutputInterface $output
      */
-    public function serializeRouteCollection(RouteCollection $routes, OutputInterface $output): void
+    public function serializeRouteCollection(ShopBasicStruct $basicShop, RouteCollection $routes, OutputInterface $output): void
     {
         $result = [];
+        $shopUrlPrefix = ($basicShop->getIsSecure() ? 'https' : 'http').'://'.$basicShop->getHost();
 
         foreach ($routes as $route) {
-            $result[] = $this->serializeRoute($route);
+            $serializedRoute = $this->serializeRoute($route);
+            $serializedRoute['path'] = $shopUrlPrefix.$serializedRoute['path'];
+            $result[] = $serializedRoute;
         }
 
         $output->writeln(json_encode($result, JSON_PRETTY_PRINT));

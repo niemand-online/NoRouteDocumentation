@@ -2,6 +2,7 @@
 
 namespace NoRouteDocumentation\Serializer;
 
+use Shopware\Shop\Struct\ShopBasicStruct;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -11,5 +12,11 @@ use Symfony\Component\Routing\RouteCollection;
  */
 interface RouteCollectionSerializerInterface
 {
-    public function serializeRouteCollection(RouteCollection $routes, OutputInterface $output): void;
+    /**
+     * Serializes the given routes and shop information into the output.
+     * @param ShopBasicStruct $basicShop
+     * @param RouteCollection $routes
+     * @param OutputInterface $output
+     */
+    public function serializeRouteCollection(ShopBasicStruct $basicShop, RouteCollection $routes, OutputInterface $output): void;
 }
