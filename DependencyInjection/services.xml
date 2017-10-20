@@ -18,5 +18,9 @@
                  class="NoRouteDocumentation\Factory\RouteCollectionSerializerFactory">
             <argument type="service" id="service_container"/>
         </service>
+        <service id="no_route_documentation.factory.route_detail_struct"
+                 class="NoRouteDocumentation\Factory\RouteDetailStructFactory">
+            <argument type="service" id="service_container"/>
+        </service>
     </services>
 </container>
