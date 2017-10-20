@@ -9,6 +9,13 @@
             <tag name="console.command" />
         </service>
 
+        <!-- Controller -->
+        <service id="no_route_documentation.controller.no_routes.api_controller"
+                 class="NoRouteDocumentation\Controller\NoRoutesController">
+            <argument type="service" id="no_route_documentation.factory.route_detail_struct"/>
+            <argument type="service" id="router"/>
+        </service>
+
         <!-- Serializer -->
         <service id="no_route_documentation.route_collection_serializer.as_json_serializer"
                  class="NoRouteDocumentation\Serializer\RouteCollectionAsJsonSerializer"/>
