@@ -37,8 +37,11 @@ class RouteCollectionSerializerFactory
         $result = null;
 
         switch (strtolower($targetType)) {
-            case 'json':
+            case 'json:basic':
                 $result = $this->container->get('no_route_documentation.route_collection_serializer.as_json_serializer');
+                break;
+            case 'json:detail':
+                $result = $this->container->get('no_route_documentation.route_collection_serializer.as_json_detail_serializer');
                 break;
         }
 

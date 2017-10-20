@@ -12,9 +12,10 @@ You can execute the new command `no:routes:serialize`.
 You have to specify the target export format.
 Accepted formats are:
 
-| Format key | Description |
-| ---------: | :---------- |
-| json       | Simple json serialization of the route classes |
+| Format key  | Description |
+| ----------: | :---------- |
+| json:basic  | Simple json serialization of the route classes |
+| json:detail | A detailed json serialization of the route classes |
 
 You can define a file to write the serialization into.
 

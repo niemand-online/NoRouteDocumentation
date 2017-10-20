@@ -12,6 +12,10 @@
         <!-- Serializer -->
         <service id="no_route_documentation.route_collection_serializer.as_json_serializer"
                  class="NoRouteDocumentation\Serializer\RouteCollectionAsJsonSerializer"/>
+        <service id="no_route_documentation.route_collection_serializer.as_json_detail_serializer"
+                 class="NoRouteDocumentation\Serializer\RouteDetailArrayAsJsonSerializer">
+            <argument type="service" id="no_route_documentation.factory.route_detail_struct"/>
+        </service>
 
         <!-- Factory -->
         <service id="no_route_documentation.factory.route_collection_serializer"
