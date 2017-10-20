@@ -3,6 +3,12 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <!-- Commands -->
+        <service id="no_route_documentation.command.serialize_routes"
+                 class="NoRouteDocumentation\Command\SerializeRoutesCommand">
+            <tag name="console.command" />
+        </service>
+
         <!-- Serializer -->
         <service id="no_route_documentation.route_collection_serializer.as_json_serializer"
                  class="NoRouteDocumentation\Serializer\RouteCollectionAsJsonSerializer"/>
