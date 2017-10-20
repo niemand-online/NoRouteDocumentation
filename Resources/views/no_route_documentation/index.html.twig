@@ -18,7 +18,7 @@
             <td><span uk-icon="icon: social" v-if="route.seo"></span><span uk-icon="icon: close" v-else></span></td>
             <td>{{ route.httpMethod }}</td>
             <td>{{ route.fullPath }}</td>
-            <td>{{ route.controllerClassName }}<span v-if="route.controllerServiceId">({{route.controllerServiceId}})</span></td>
+            <td v-bind:title="route.controllerFilename">{{ route.controllerClassName }}<span v-if="route.controllerServiceId">({{route.controllerServiceId}})</span></td>
             <td>{{route.methodName}}</td>
         </tr>`,
         props: ['route']

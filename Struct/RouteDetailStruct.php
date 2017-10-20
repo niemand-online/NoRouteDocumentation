@@ -13,6 +13,11 @@ class RouteDetailStruct implements JsonSerializable
     /**
      * @var null|string
      */
+    private $controllerFilename;
+
+    /**
+     * @var null|string
+     */
     private $controllerClassName;
 
     /**
@@ -44,6 +49,24 @@ class RouteDetailStruct implements JsonSerializable
      * @var null|bool
      */
     private $seo;
+
+    /**
+     * @return null|string
+     */
+    public function getControllerFilename()
+    {
+        return $this->controllerFilename;
+    }
+
+    /**
+     * @param null|string $controllerFilename
+     * @return RouteDetailStruct
+     */
+    public function setControllerFilename(?string $controllerFilename): RouteDetailStruct
+    {
+        $this->controllerFilename = $controllerFilename;
+        return $this;
+    }
 
     /**
      * @return null|string
@@ -181,6 +204,7 @@ class RouteDetailStruct implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'controllerFilename' => $this->getControllerFilename(),
             'controllerClassName' => $this->getControllerClassName(),
             'controllerServiceId' => $this->getControllerServiceId(),
             'methodName' => $this->getMethodName(),

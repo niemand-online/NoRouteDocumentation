@@ -3,6 +3,7 @@
 namespace NoRouteDocumentation\Factory;
 
 use NoRouteDocumentation\Struct\RouteDetailStruct;
+use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 
@@ -43,6 +44,8 @@ class RouteDetailStructFactory
 
         if ($route->hasDefault('_controller')) {
             $controller = $route->getDefault('_controller');
+            $class = '';
+
             if (strpos($controller,'::') !== false) {
                 list($class, $method) = explode('::', $controller);
                 $result->setControllerClassName($class);
@@ -53,9 +56,12 @@ class RouteDetailStructFactory
                 $result->setMethodName($method);
 
                 if ($this->container->has($service)) {
-                    $result->setControllerClassName(get_class($this->container->get($service)));
+                    $result->setControllerClassName($class = get_class($this->container->get($service)));
                 }
             }
+
+            $reflectionClass = new ReflectionClass($class);
+            $result->setControllerFilename($reflectionClass->getFileName());
         }
 
         return $result;
