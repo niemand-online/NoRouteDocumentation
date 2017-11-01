@@ -1,0 +1,63 @@
+---
+layout: default
+title: niemand<span class="loading">.</span>online / NoRouteDocumentation
+spectre:
+  - labels
+  - buttons
+  - layout
+  - navbar
+  - tiles
+  - animations
+  - utilities
+  - tables
+  - breadcrumbs
+---
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">niemand.online</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/NoRouteDocumentation">NoRouteDocumentation</a>
+    </li>
+</ul>
+<div class="container pt-2 mt-2">
+    <h6>Because there is no REST documentation yet</h6>
+
+    <h2>Installation</h2>
+    <p>
+        <ol>
+            <li>Unpack into <kbd>/custom/plugins/NoRouteDocumentation</kbd></li>
+            <li><kbd>bin/console plugin:update</kbd> - Update plugin list</li>
+            <li><kbd>bin/console plugin:install NoRouteDocumentation</kbd> - Install plugin</li>
+            <li><kbd>bin/console plugin:activate NoRouteDocumentation</kbd> - Activate plugin</li>
+        </ol>
+    </p>
+
+    <h2>Usage</h2>
+    <p>
+        You can execute the new command <kbd>no:routes:serialize</kbd>. You have to specify the target export format. Accepted formats are:
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Format key</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>json:basic</td>
+                    <td>Simple json serialization of the route classes</td>
+                </tr>
+                <tr>
+                    <td>json:detail</td>
+                    <td>A detailed json serialization of the route classes</td>
+                </tr>
+            </tbody>
+        </table>
+        You can define a file to write the serialization into.
+    </p>
+    <h2>License</h2>
+    <p>
+        Have look at the shipped <a href="https://github.com/niemand-online/NoRouteDocumentation/blob/master/LICENSE">LICENSE file</a>. In short LGPL v3.0.
+    </p>
+</div>
