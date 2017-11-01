@@ -1,0 +1,3 @@
+[submodule "gh-pages-theme"]
+	path = gh-pages-theme
+	url = https://github.com/niemand-online/gh-pages-theme/
